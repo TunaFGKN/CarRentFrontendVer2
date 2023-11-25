@@ -1,1 +1,18 @@
-<p>rental works!</p>
+<table *ngIf="dataLoaded==true" class="table">
+    <thead>
+        <tr>
+          <th>Id</th>
+          <th>Color</th>
+          <th>Brand</th>
+          <th>DailyPrice</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let rental of rentals">
+        <td>{{ rental.rentalId }}</td>
+        <td>{{ rental.customerId }}</td>
+        <td>{{ rental.carId }}</td>
+        <td>{{ rental.rentDate }}</td>
+        <td>{{ rental.returnDate }}</td>
+      </tr>
+</table>

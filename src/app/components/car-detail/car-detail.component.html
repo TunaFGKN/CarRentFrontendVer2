@@ -14,7 +14,7 @@
           <th>Description</th>
         </tr>
       </thead>
-      <tr *ngFor="let carDetail of carDetails">
+      <tr *ngFor="let carDetail of carDetails" (click)="setCurrentCar(carDetail)" [routerLink]="'car/' + carDetail.carId">
         <td>{{ carDetail.carId }}</td>
         <td>{{ carDetail.colorName }}</td>
         <td>{{ carDetail.brandName }}</td>
@@ -22,3 +22,7 @@
         <td>{{ carDetail.description }}</td>
       </tr>
 </table>
+
+<div *ngFor="let carImage of carImageDetail">
+  <img *ngIf="isImageLoaded" [src]="getImagePath(carImage)" alt="">
+</div>

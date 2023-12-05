@@ -3,5 +3,8 @@ export interface CarDetail{
     brandName:string,
     colorName:string,
     dailyPrice:number,
-    description:string
+    description:string,
+    brandId:number,
+    colorId:number,
+    images:string[]
 }

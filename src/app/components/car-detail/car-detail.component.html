@@ -4,6 +4,31 @@
     </div>
 </div>
 
+<div class="row">
+  <div class="col-md-5">
+    <div class="form-group" >
+      <label for="brandDropdown">Brand:</label>
+      <select id="brandDropdown" class="form-select" [(ngModel)]="selectedBrand" name="selectedBrand">
+        <option *ngFor="let brand of brands" [value]="brand.brandId">{{ brand.brandName }}></option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="form-group" >
+      <label for="brandDropdown">Color:</label>
+      <select id="brandDropdown" class="form-select" [(ngModel)]="selectedColor" name="selectedBrand">
+        <option *ngFor="let color of colors" [value]="color.colorId">{{ color.colorName }}></option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-1" style="margin-top: 25px;">
+    <button type="button" class="btn btn-success">Filter</button>
+  </div>
+  <div class="col-md-1" style="margin-top: 25px;">
+    <button type="button" class="btn btn-success">Clear</button>
+  </div>
+</div>
+
 <table *ngIf="dataLoaded==true" class="table">
     <thead>
         <tr>
@@ -24,5 +49,5 @@
 </table>
 
 <div *ngFor="let carImage of carImageDetail">
-  <img *ngIf="isImageLoaded" [src]="getImagePath(carImage)" alt="">
+  <img *ngIf="isImageLoaded" width="300" height="250" [src]="getImagePath(carImage)" alt="">
 </div>

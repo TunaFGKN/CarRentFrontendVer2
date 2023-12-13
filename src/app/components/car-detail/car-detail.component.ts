@@ -1,11 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Brand } from 'src/app/models/brand';
 import { Car } from 'src/app/models/car';
 import { CarDetail } from 'src/app/models/carDetail';
 import { CarImageDetail } from 'src/app/models/carImageDetail';
+import { Color } from 'src/app/models/color';
+import { BrandService } from 'src/app/services/brand.service';
 import { CarDetailService } from 'src/app/services/car-detail.service';
 import { CarImageService } from 'src/app/services/car-image.service';
+import { ColorService } from 'src/app/services/color.service';
 
 @Component({
   selector: 'app-car-detail',
@@ -15,6 +19,10 @@ import { CarImageService } from 'src/app/services/car-image.service';
 export class CarDetailComponent implements OnInit {
   carDetails:CarDetail[] = [];
   carImageDetail: CarImageDetail[] = [];
+  brands:Brand[] = [];
+  colors:Color[] = [];
+  selectedBrand: Brand | null = null;
+  selectedColor: Color | null = null;
   currentCar:CarDetail | null = null;
   dataLoaded = false;
   isImageLoaded = false;
@@ -22,10 +30,12 @@ export class CarDetailComponent implements OnInit {
   selectedCarImage: string = "";
   
 
-  constructor(private carDetailService:CarDetailService, private route:ActivatedRoute, private carImageService: CarImageService, private httpClient:HttpClient){}
+  constructor(private carDetailService:CarDetailService, private route:ActivatedRoute, private carImageService: CarImageService, private httpClient:HttpClient, private brandService:BrandService, private colorService:ColorService){}
 
   ngOnInit(): void {
     this.route.params.subscribe(params=>{
+      this.getBrands()
+      this.getColors()
       if(params["brandId"]){
         this.getCarDetailsByBrand(params["brandId"]);
       }else if(params["colorId"]){
@@ -91,5 +101,32 @@ export class CarDetailComponent implements OnInit {
     }else{
       return "list-group-item"
     }
+  }
+
+  getBrands(){
+    this.brandService.getBrands().subscribe(response => {
+      this.brands = response.data;
+    });
+  }
+
+  setCurrentBrand(brand:Brand){
+    this.selectedBrand = brand
+  }
+
+  getColors(){
+    this.colorService.getColors().subscribe(response => {
+      this.colors = response.data;
+    });
+  }
+
+  setCurrentColor(color:Color){
+    this.selectedColor = color
+  }
+
+  clear(){
+    this.selectedBrand = null;
+    this.selectedColor = null;
+    
+    this.getCarDetails(); 
   }
 }
